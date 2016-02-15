@@ -200,7 +200,6 @@
 	function init(){
 		if(!localStorage._ID123){return}
 		_ID123 = JSON.parse(localStorage._ID123);
-        console.log(_ID123);
 		for(var i in _ID123){
 			console.log(_ID123[i].title);
 			addNewCategory(_ID123[i].title,true);
