@@ -11,104 +11,104 @@
 	categoryList.identifier = 0;
 	localStorage.category_list = '';
 	//添加分类
-	$(".add-category").addEventListener("click",function(){
-		$(".prompt-bg").style.display = "block";
-		$(".prompt").style.display = "block";
-		$(".prompt-title").innerHTML = "添加分类";
-		$(".input").focus();
+	$$(".add-category").addEventListener("click",function(){
+		$$(".prompt-bg").style.display = "block";
+		$$(".prompt").style.display = "block";
+		$$(".prompt-title").innerHTML = "添加分类";
+		$$(".input").focus();
 
-		$(".prompt-done").addEventListener("click",function(){
+		$$(".prompt-done").addEventListener("click",function(){
 			var f = arguments.callee;
-			$(".prompt-done").removeEventListener("click",f);
-			$(".prompt-bg").style.display = "none";
-			$(".prompt").style.display = "none";
-            $(".input").value?addNewCategory($(".input").value):false;
-			$(".input").value = "";
+			$$(".prompt-done").removeEventListener("click",f);
+			$$(".prompt-bg").style.display = "none";
+			$$(".prompt").style.display = "none";
+            $$(".input").value?addNewCategory($$(".input").value):false;
+			$$(".input").value = "";
 		})
 	});
 	//添加子分类
-	$(".add-sub-category").addEventListener("click",function(){
-		if(active.category == $(".category-default")){return;}
-		$(".prompt-bg").style.display = "block";
-		$(".prompt").style.display = "block";
-		$(".prompt-title").innerHTML = "添加子分类";
-		$(".input").focus();
+	$$(".add-sub-category").addEventListener("click",function(){
+		if(active.category == $$(".category-default")){return;}
+		$$(".prompt-bg").style.display = "block";
+		$$(".prompt").style.display = "block";
+		$$(".prompt-title").innerHTML = "添加子分类";
+		$$(".input").focus();
 
-		$(".prompt-done").addEventListener("click",function(){
+		$$(".prompt-done").addEventListener("click",function(){
 			var f = arguments.callee;
-			$(".prompt-done").removeEventListener("click",f);
-			$(".prompt-bg").style.display = "none";
-			$(".prompt").style.display = "none";
-			$(".input").value?addNewSubCategory(active.category,$(".input").value):false;
-			$(".input").value = "";
+			$$(".prompt-done").removeEventListener("click",f);
+			$$(".prompt-bg").style.display = "none";
+			$$(".prompt").style.display = "none";
+			$$(".input").value?addNewSubCategory(active.category,$$(".input").value):false;
+			$$(".input").value = "";
 		})
 	});
-	$(".prompt-cancle").addEventListener("click",function(){
-		$(".prompt-bg").style.display = "none";
-		$(".prompt").style.display = "none";
+	$$(".prompt-cancle").addEventListener("click",function(){
+		$$(".prompt-bg").style.display = "none";
+		$$(".prompt").style.display = "none";
 	});
 	//添加任务
-	$(".add-task").onclick = function(){
-		$(".baocun-wancheng").style.color = "black";
+	$$(".add-task").onclick = function(){
+		$$(".baocun-wancheng").style.color = "black";
 
-			$(".content-input").value = "";
-			$(".title-input").value = "新任务";
-			$(".date-input").value = "";
+			$$(".content-input").value = "";
+			$$(".title-input").value = "新任务";
+			$$(".date-input").value = "";
 		var fn = arguments.callee;
 		this.onclick = null;
 		var _this = this;
 		if(active.subCategory == null){return;}
-		$(".content-input").style.display="block";
-		$(".title-input").style.display="block";
-		$(".date-input").style.display="block";
-		$(".baocun-wancheng").className = "iconfont icon-baocun tt-icon cp fade50 baocun-wancheng";
-		$(".baocun-wancheng").onclick = function(){
-			if(!$(".title-input").value){return}
-			$(".baocun-wancheng").onclick = function(){
+		$$(".content-input").style.display="block";
+		$$(".title-input").style.display="block";
+		$$(".date-input").style.display="block";
+		$$(".baocun-wancheng").className = "iconfont icon-baocun tt-icon cp fade50 baocun-wancheng";
+		$$(".baocun-wancheng").onclick = function(){
+			if(!$$(".title-input").value){return}
+			$$(".baocun-wancheng").onclick = function(){
 				taskDone();
 			};
-			addNewTask($(".title-input").value,$(".date-input").value,$(".content-input").value);
-			$(".content-input").style.display="none";
-			$(".title-input").style.display="none";
-			$(".date-input").style.display="none";
-			$(".task-content").innerHTML = $(".content-input").value;
-			$(".task-title").innerHTML = $(".title-input").value;
-			$(".task-date").innerHTML = $(".date-input").value;
-			$(".content-input").value = "";
-			$(".title-input").value = "新任务";
-			$(".date-input").value = "";
-			$(".baocun-wancheng").className = "iconfont icon-wancheng tt-icon cp fade50 baocun-wancheng";
-			$(".add-task").onclick = fn;			
+			addNewTask($$(".title-input").value,$$(".date-input").value,$$(".content-input").value);
+			$$(".content-input").style.display="none";
+			$$(".title-input").style.display="none";
+			$$(".date-input").style.display="none";
+			$$(".task-content").innerHTML = $$(".content-input").value;
+			$$(".task-title").innerHTML = $$(".title-input").value;
+			$$(".task-date").innerHTML = $$(".date-input").value;
+			$$(".content-input").value = "";
+			$$(".title-input").value = "新任务";
+			$$(".date-input").value = "";
+			$$(".baocun-wancheng").className = "iconfont icon-wancheng tt-icon cp fade50 baocun-wancheng";
+			$$(".add-task").onclick = fn;			
 		}
 	};
-	$(".icon-edit").onclick = function(){
-		$(".content-input").style.display="block";
-		$(".title-input").style.display="block";
-		$(".date-input").style.display="block";
-		$(".baocun-wancheng").className = "iconfont icon-baocun tt-icon cp fade50 baocun-wancheng";
-		$(".content-input").value = active.task.content;
-		$(".title-input").value = active.task.title;
-		$(".date-input").value = active.task.date;
-		$(".baocun-wancheng").onclick = function(){
-			if(!$(".title-input").value){return}
-			$(".baocun-wancheng").className = "iconfont icon-wancheng tt-icon cp fade50 baocun-wancheng";
-			$(".baocun-wancheng").onclick = function(){
+	$$(".icon-edit").onclick = function(){
+		$$(".content-input").style.display="block";
+		$$(".title-input").style.display="block";
+		$$(".date-input").style.display="block";
+		$$(".baocun-wancheng").className = "iconfont icon-baocun tt-icon cp fade50 baocun-wancheng";
+		$$(".content-input").value = active.task.content;
+		$$(".title-input").value = active.task.title;
+		$$(".date-input").value = active.task.date;
+		$$(".baocun-wancheng").onclick = function(){
+			if(!$$(".title-input").value){return}
+			$$(".baocun-wancheng").className = "iconfont icon-wancheng tt-icon cp fade50 baocun-wancheng";
+			$$(".baocun-wancheng").onclick = function(){
 				taskDone();
 			};
-			$(".content-input").style.display="none";
-			$(".title-input").style.display="none";
-			$(".date-input").style.display="none";
-			$(".task-content").innerHTML = $(".content-input").value;
-			$(".task-title").innerHTML = $(".title-input").value;
-			$(".task-date").innerHTML = $(".date-input").value;
-			active.task.content = $(".content-input").value;
-			active.task.title = $(".title-input").value;
-			active.task.date = $(".date-input").value;
+			$$(".content-input").style.display="none";
+			$$(".title-input").style.display="none";
+			$$(".date-input").style.display="none";
+			$$(".task-content").innerHTML = $$(".content-input").value;
+			$$(".task-title").innerHTML = $$(".title-input").value;
+			$$(".task-date").innerHTML = $$(".date-input").value;
+			active.task.content = $$(".content-input").value;
+			active.task.title = $$(".title-input").value;
+			active.task.date = $$(".date-input").value;
 			active.task.innerHTML = active.task.title;
 			LSTask(active.subCategory,active.task)
 		}
 	};
-	$(".baocun-wancheng").onclick = function(){
+	$$(".baocun-wancheng").onclick = function(){
 		taskDone();
 	};
 	function addNewCategory(title,init){
@@ -119,7 +119,7 @@
 		category.sub = [];
 		category.sub.identifier = 0;
 		category.innerHTML = "<div class=\"category-title cp\"><i class=\"category-icon iconfont\">&#xe624;</i><span class=\"category-title-name\">" + title + "</span><span class=\"delete delete-category\">x</span></div>		<ul class=\"sub-category-list\"></ul>";
-		$(".category-list").appendChild(category);
+		$$(".category-list").appendChild(category);
 		categoryList.push(category);
 		changeCategory(category);
 		category.querySelector(".category-title").onclick = categoryTitleClick;
@@ -180,7 +180,7 @@
 		active.subCategory.task.push(task);
 		task.onclick = taskClick;
 		// console.log(active.subCategory.task);
-		$(".date-list").appendChild(task);
+		$$(".date-list").appendChild(task);
 		changeTask(task);
 		active.task = task;
 		if(isDone){
@@ -253,13 +253,13 @@
 		if(obj.task[0]){
 			changeTask(obj.task[0])
 		}else{
-			$(".content-input").value = "";
-			$(".title-input").value = "新任务";
-			$(".date-input").value = "";
-			$(".task-content").innerHTML = '';
-			$(".task-title").innerHTML = '';
-			$(".task-date").innerHTML = '';
-			$(".baocun-wancheng").style.color = "black";
+			$$(".content-input").value = "";
+			$$(".title-input").value = "新任务";
+			$$(".date-input").value = "";
+			$$(".task-content").innerHTML = '';
+			$$(".task-title").innerHTML = '';
+			$$(".task-date").innerHTML = '';
+			$$(".baocun-wancheng").style.color = "black";
 		}
 	}
 	function changeTask(obj){
@@ -272,20 +272,20 @@
 		}
 		
 		obj.className = "task active";
-		$(".task-content").innerHTML = obj.content;
-		$(".task-title").innerHTML = obj.title;
-		$(".task-date").innerHTML = obj.date;
+		$$(".task-content").innerHTML = obj.content;
+		$$(".task-title").innerHTML = obj.title;
+		$$(".task-date").innerHTML = obj.date;
 		active.task = obj;
 		if(obj.isDone == true){
-			$(".baocun-wancheng").style.color = "green";
+			$$(".baocun-wancheng").style.color = "green";
 		}else{
-			$(".baocun-wancheng").style.color = "black";
+			$$(".baocun-wancheng").style.color = "black";
 		}
 	}
 	function taskDone(){
 		active.task.isDone = true;
 		active.task.style.fontWeight = "normal";
-		$(".baocun-wancheng").style.color = "green";
+		$$(".baocun-wancheng").style.color = "green";
 		LSTask(active.subCategory,active.task);
 	}
 
@@ -298,7 +298,7 @@
 		}
 	}
 
-	function $(selector){
+	function $$(selector){
 			return document.querySelector(selector);
 	}
 	init();
