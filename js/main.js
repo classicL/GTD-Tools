@@ -280,6 +280,9 @@
 		}else{
 			$$(".baocun-wancheng").style.color = "black";
 		}
+		$$(".tlbtn-all").className = "tlbtn tlbtn-all active";
+		$$(".tlbtn-done").className = "tlbtn tlbtn-done"
+		$$(".tlbtn-undone").className = "tlbtn tlbtn-undone";
 	}
 	function taskDone(){
 		active.task.isDone = true;
@@ -288,6 +291,38 @@
 		LSTask(active.subCategory,active.task);
 	}
 
+	$$(".tlbtn-all").onclick = function(){
+		this.className = "tlbtn tlbtn-all active";
+		$$(".tlbtn-done").className = "tlbtn tlbtn-done"
+		$$(".tlbtn-undone").className = "tlbtn tlbtn-undone";
+		for(var i in active.subCategory.task){
+			active.subCategory.task[i].style.display = "block";
+		}
+	}
+	$$(".tlbtn-done").onclick = function(){
+		this.className = "tlbtn tlbtn-done active";
+		$$(".tlbtn-all").className = "tlbtn tlbtn-all";
+		$$(".tlbtn-undone").className = "tlbtn tlbtn-undone";
+		for(var i in active.subCategory.task){
+			if(active.subCategory.task[i].isDone === true){
+				active.subCategory.task[i].style.display = "none";
+			}else{
+				active.subCategory.task[i].style.display = "block";
+			}
+		}
+	}
+	$$(".tlbtn-undone").onclick = function(){
+		this.className = "tlbtn tlbtn-undone active";
+		$$(".tlbtn-all").className = "tlbtn tlbtn-all";
+		$$(".tlbtn-done").className = "tlbtn tlbtn-done"
+		for(var i in active.subCategory.task){
+			if(active.subCategory.task[i].isDone === true){
+				active.subCategory.task[i].style.display = "block";
+			}else{
+				active.subCategory.task[i].style.display = "none";
+			}
+		}
+	}
 	//获取样式
 	function getStyle(obj, attr){
 		if(obj.currentStyle){
