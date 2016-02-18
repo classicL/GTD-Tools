@@ -126,10 +126,10 @@
 		if(!init){LSCategory(category)}
 	}
 	function LSCategory(obj){
+		console.log(_ID123);
 		_ID123[obj.id] = {};
 		_ID123[obj.id]["title"] = obj.title;
 		_ID123[obj.id]["sc"] = {};
-
 		localStorage._ID123 = JSON.stringify(_ID123);
 	}
     //function deleteCategory(obj){
@@ -199,7 +199,7 @@
 	}
 	function init(){
 		if(!localStorage._ID123){return}
-		_ID123 = JSON.parse(localStorage._ID123);
+		_ID123 = JSON.parse(localStorage._ID123) || {};
 		for(var i in _ID123){
 			console.log(_ID123[i].title);
 			addNewCategory(_ID123[i].title,true);
