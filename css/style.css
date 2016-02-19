@@ -136,7 +136,7 @@ html,body {
 	width: 248px;
 	font-size: 20px;
 }
-.category-title:hover .delete,.sub-category:hover .delete{
+.category-title:hover .delete,.sub-category:hover .delete,.task:hover .delete{
 	display: inline;
 }
 .category-icon {
@@ -176,6 +176,7 @@ html,body {
 	padding: 0 20px;
 	cursor: pointer;
 	font-weight: bold;
+	position: relative;
 }
 .task-detail-wrap {
 	margin-left: 500px;

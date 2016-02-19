@@ -1,7 +1,6 @@
 (function(){
 	var _ID123 = _ID123 || {};
     //if(!_ID123){ var _ID123 = {};}
-    console.log(_ID123);
     var active = {
 		category: null,
 		subCategory: null,
@@ -111,10 +110,17 @@
 	$$(".baocun-wancheng").onclick = function(){
 		taskDone();
 	};
-	function addNewCategory(title,init){
+	function addNewCategory(title,id,init){
 		var category = document.createElement("div");
 		category.className = "category";
-		category.id = "C-" + categoryList.identifier++;
+		if(id){
+			category.id = id;
+			categoryList.identifier = 1 + parseInt(category.id.split("-")[1]);
+		}else{
+			category.id = "C-" + categoryList.identifier++;
+		}
+		
+		// console.log(categoryList.identifier)
 		category.title = title;
 		category.sub = [];
 		category.sub.identifier = 0;
@@ -126,28 +132,68 @@
 		if(!init){LSCategory(category)}
 	}
 	function LSCategory(obj){
-		console.log(_ID123);
+		// console.log(_ID123);
 		_ID123[obj.id] = {};
 		_ID123[obj.id]["title"] = obj.title;
 		_ID123[obj.id]["sc"] = {};
 		localStorage._ID123 = JSON.stringify(_ID123);
 	}
-    //function deleteCategory(obj){
-    //    if(confirm('确定删除分类 ' + obj.title + ' 么？')){
-    //        delete _ID123[obj.id];
-    //    }
-    //    localStorage._ID123 = JSON.stringify(_ID123);
-    //    init();
-    //}
-    //document.onclick = function(e){
-    //    if(e.target.className === "delete delete-category"){
-    //        deleteCategory(e.target.parentNode.parentNode);
-    //    }
-    //};
+    function deleteTask(obj){
+    	obj.parentNode.removeChild(obj);
+    	delete active.subCategory.task[obj.id];
+    	delete _ID123[active.subCategory.parentNode.parentNode.id]["sc"][active.subCategory.id]["task"][obj.id];
+    	$$(".task-title").innerHTML = "";
+    	$$(".task-date").innerHTML = "";
+    	$$(".task-content").innerHTML = "";
+    	localStorage._ID123 = JSON.stringify(_ID123);
+    }
+    function deleteSubCategory(obj){
+    	for(var i in obj.task){
+    		// console.log(typeof obj.task[i])
+    		if(typeof obj.task[i] === "object"){
+    			deleteTask(obj.task[i])
+    		}
+    	}
+    	var sid = obj.id;
+    	delete obj.parentNode.parentNode.sub[sid.split("-")[2]];
+    	console.log(obj.parentNode.parentNode.sub);
+    	delete _ID123[obj.parentNode.parentNode.id]["sc"][obj.id];
+    	obj.parentNode.removeChild(obj);
+    	localStorage._ID123 = JSON.stringify(_ID123);
+    }
+    function deleteCategory(obj){
+    	for(var i in obj.sub){
+    		if(typeof obj.sub[i] === "object"){
+    			deleteSubCategory(obj.sub[i]);
+    		}
+    	}
+    	delete categoryList[obj.id];
+    	delete _ID123[obj.id];
+    	obj.parentNode.removeChild(obj);
+    	localStorage._ID123 = JSON.stringify(_ID123);
+    }
+    document.onclick = function(e){
+    	var e = e || event;
+    	if(e.target.className === "delete delete-task"){
+    		deleteTask(e.target.parentNode);
+    	}
+    	if(e.target.className === "delete delete-sub-category"){
+    		deleteSubCategory(e.target.parentNode);
+    	}
+    	if(e.target.className === "delete delete-category"){
+    		deleteCategory(e.target.parentNode.parentNode);
+    	}
+    }
 	function addNewSubCategory(sup,title,id,init){
 		var subCategory = document.createElement("li");
 		subCategory.className = "sub-category cp";
-		subCategory.id = id || sup.id + "-" + sup.sub.identifier++;
+		if(id){
+			subCategory.id = id;
+			sup.sub.identifier = parseInt(subCategory.id.split("-")[2]) + 1;
+		}else{
+			subCategory.id =sup.id + "-" + sup.sub.identifier;
+			sup.sub.identifier ++;
+		}
 		subCategory.title = title;
 		subCategory.task = [];
 		subCategory.task.identifier = 0;
@@ -161,6 +207,8 @@
 		if(!init){LSSubCategory(sup,subCategory)}
 	}
 	function LSSubCategory(sup,obj){
+		console.log(_ID123[sup.id])
+		console.log(_ID123)
 		_ID123[sup.id]["sc"][obj.id] = {};
 		_ID123[sup.id]["sc"][obj.id].title = obj.title;
 		_ID123[sup.id]["sc"][obj.id]['task'] = {};
@@ -168,18 +216,24 @@
 		localStorage._ID123 = JSON.stringify(_ID123);
 		// console.log(JSON.stringify(_ID123));
 	}
-	function addNewTask(title,date,content,isDone,init){
+	function addNewTask(title,date,content,isDone,id,init){
 		var task = document.createElement("div");
 		task.title = title;
-		task.id = active.subCategory.task.identifier++;
+		if(id){
+			task.id = id;
+			active.subCategory.task.identifier = parseInt(task.id) + 1;
+		}else{
+			task.id = active.subCategory.task.identifier;
+			active.subCategory.task.identifier++;
+		}
+		
 		task.date = date;
 		task.isDone = task.isDone||false;
 		task.content = content;
 		task.className = "task";
-		task.innerHTML = title;
+		task.innerHTML = title + "<span class=\"delete delete-task\">X</span>";
 		active.subCategory.task.push(task);
 		task.onclick = taskClick;
-		// console.log(active.subCategory.task);
 		$$(".date-list").appendChild(task);
 		changeTask(task);
 		active.task = task;
@@ -201,14 +255,11 @@
 		if(!localStorage._ID123){return}
 		_ID123 = JSON.parse(localStorage._ID123) || {};
 		for(var i in _ID123){
-			console.log(_ID123[i].title);
-			addNewCategory(_ID123[i].title,true);
+			addNewCategory(_ID123[i].title,i,true);
 			for(var k in _ID123[i].sc){
-				console.log(_ID123[i].sc[k].title)
 				addNewSubCategory(active.category,_ID123[i].sc[k].title,k,true);
 				for(var j in _ID123[i].sc[k].task){
-					console.log(_ID123[i].sc[k].task[j].title);
-					addNewTask(_ID123[i].sc[k].task[j].title,_ID123[i].sc[k].task[j].date,_ID123[i].sc[k].task[j].content,_ID123[i].sc[k].task[j].isDone,true)
+					addNewTask(_ID123[i].sc[k].task[j].title,_ID123[i].sc[k].task[j].date,_ID123[i].sc[k].task[j].content,_ID123[i].sc[k].task[j].isDone,j,true)
 				}
 			}
 		}
@@ -238,9 +289,14 @@
 	function changeSubCategory(obj){
 		for (var i = 0; i < categoryList.length; i++) {
 			for (var j = 0; j < categoryList[i].sub.length; j++) {
-				categoryList[i].sub[j].className = "sub-category cp";
-				for(var k = 0; k <categoryList[i].sub[j].task.length; k++){
-					categoryList[i].sub[j].task[k].style.display = "none";
+				if(categoryList[i].sub[j]){
+					categoryList[i].sub[j].className = "sub-category cp";
+				
+					for(var k = 0; k <categoryList[i].sub[j].task.length; k++){
+						if(categoryList[i].sub[j].task[k]){
+							categoryList[i].sub[j].task[k].style.display = "none";
+						}
+					}
 				}
 			}
 		}
@@ -264,12 +320,15 @@
 	function changeTask(obj){
 		for (var i = 0; i < categoryList.length; i++) {
 			for (var j = 0; j < categoryList[i].sub.length; j++) {
+				if(!categoryList[i].sub[j]){continue}
 				for(var k = 0; k<categoryList[i].sub[j].task.length; k++){
-					categoryList[i].sub[j].task[k].className = "task";
+					if(categoryList[i].sub[j].task[k]){
+						categoryList[i].sub[j].task[k].className = "task";
+					}
 				}
 			}
 		}
-		
+
 		obj.className = "task active";
 		$$(".task-content").innerHTML = obj.content;
 		$$(".task-title").innerHTML = obj.title;
