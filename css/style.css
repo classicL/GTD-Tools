@@ -47,14 +47,14 @@ html,body {
 	margin-left: -200px;
 	top: 50%;
 	margin-top: -150px;
-	border-radius: 50px;
+	border-radius: 20px;
 }
 .prompt-heading {
 	height: 100px;
 	line-height: 100px;
 	font-size: 30px;
 	background: #888;
-	border-radius: 50px 50px 0 0 ;
+	border-radius: 20px 20px 0 0 ;
 }
 .prompt-cancle,.prompt-done {
 	position: absolute;
@@ -76,23 +76,26 @@ html,body {
 	font-size: 30px;
 }
 .heading {
-	height: 40px;
-	background: #aaa;
-	line-height: 40px;
+	height: 60px;
+	background: #ccc;
+	font: 30px Arial;
+	line-height: 60px;
+	text-indent: 10px;
+	color: #888;
 }
 .content {
 	position: absolute;
 	width: 100%;
-	top: 40px;
+	top: 60px;
 	bottom: 0;
 }
 .category-list,.task-list {
 	position: absolute;
 	width: 248px;
-	border-right: 2px solid #bbb;
+	border-right: 2px solid #aaa;
 	top: 0;
 	bottom: 40px;
-	background: #ddd;
+	background: #eee;
 	overflow: auto;
 }
 .task-list {
@@ -107,7 +110,7 @@ html,body {
 	line-height: 40px;
 	text-align: center;
 	font-weight: bold;
-	background: #aaa;
+	background: #ddd;
 	border-right: 2px solid #bbb;
 	bottom: 0;
 	cursor: pointer;
@@ -136,7 +139,7 @@ html,body {
 	width: 248px;
 	font-size: 20px;
 }
-.category-title:hover .delete,.sub-category:hover .delete,.task:hover .delete{
+.category-title:hover .delete,.sub-category:hover .delete{
 	display: inline;
 }
 .category-icon {
@@ -151,7 +154,7 @@ html,body {
 .task-list-heading {
 	height: 40px;
 	line-height: 40px;
-	background: #ccc;
+	background: #ddd;
 }
 .task-list-heading .active {
 	background: #eee;
@@ -176,7 +179,6 @@ html,body {
 	padding: 0 20px;
 	cursor: pointer;
 	font-weight: bold;
-	position: relative;
 }
 .task-detail-wrap {
 	margin-left: 500px;
@@ -194,7 +196,7 @@ html,body {
 	position: relative;
 	height: 50px;
 	line-height: 50px;
-	background: #bbb;
+	background: #ddd;
 }
 .tt-icon{
 	float: right;
@@ -205,7 +207,7 @@ html,body {
 	position: relative;
 	height: 40px;
 	line-height: 40px;
-	background: #ddd;
+	background: #eee;
 }
 .task-title {
 	width: 300px;
